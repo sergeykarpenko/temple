@@ -1,1 +1,1322 @@
-
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Храм Вознесения - Презентация</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600;6..96,800&family=Raleway:wght@200;300;400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+        }
+        
+        .presentation-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: #000;
+        }
+        
+        /* Mystical particles background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #D4AF37;
+            border-radius: 50%;
+            opacity: 0;
+            animation: float 20s infinite;
+        }
+        
+        @keyframes float {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) scale(0);
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100vh) scale(1.5);
+            }
+        }
+        
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            overflow: hidden;
+        }
+        
+        .slide.active {
+            opacity: 1;
+        }
+        
+        /* Epic backgrounds */
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, 
+                rgba(75, 0, 130, 0.3) 0%, 
+                rgba(25, 0, 51, 0.6) 30%, 
+                rgba(0, 0, 0, 0.9) 70%);
+            animation: rotate 60s linear infinite;
+            z-index: 0;
+        }
+        
+        .slide::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(75, 0, 130, 0.1) 0%, transparent 50%);
+            z-index: 1;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .slide-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 60px;
+            max-width: 1400px;
+            width: 90%;
+        }
+        
+        /* Sacred geometry background */
+        .sacred-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            opacity: 0.03;
+            z-index: 0;
+        }
+        
+        .sacred-bg svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Typography - Epic style */
+        .title-main {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 6rem;
+            font-weight: 900;
+            background: linear-gradient(
+                45deg,
+                #D4AF37 0%,
+                #F4E4C1 20%,
+                #D4AF37 40%,
+                #B8860B 60%,
+                #D4AF37 80%,
+                #F4E4C1 100%
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 0.5rem;
+            margin-bottom: 30px;
+            text-shadow: 
+                0 0 40px rgba(212, 175, 55, 0.8),
+                0 0 80px rgba(212, 175, 55, 0.5),
+                0 0 120px rgba(212, 175, 55, 0.3);
+            line-height: 0.9;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                filter: brightness(1) drop-shadow(0 0 30px rgba(212, 175, 55, 0.8));
+            }
+            to {
+                filter: brightness(1.2) drop-shadow(0 0 50px rgba(212, 175, 55, 1));
+            }
+        }
+        
+        .title-secondary {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 3rem;
+            font-weight: 600;
+            color: #D4AF37;
+            margin-bottom: 40px;
+            text-shadow: 
+                0 0 20px rgba(212, 175, 55, 0.6),
+                0 0 40px rgba(138, 43, 226, 0.3);
+            letter-spacing: 0.3rem;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: #C9B6DB;
+            margin-bottom: 20px;
+            letter-spacing: 0.4rem;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+        
+        .epic-subtitle {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 2rem;
+            color: #8A2BE2;
+            margin: 30px 0;
+            font-weight: 300;
+            letter-spacing: 0.2rem;
+            text-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+        }
+        
+        .text-content {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #E6E6FA;
+            font-weight: 300;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .highlight {
+            color: #D4AF37;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+        
+        /* Logo integration */
+        .logo-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            opacity: 0.15;
+            z-index: 1;
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.15; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.25; }
+        }
+        
+        /* Premium cards with mystical style */
+        .mystical-card {
+            background: linear-gradient(135deg, 
+                rgba(75, 0, 130, 0.2) 0%, 
+                rgba(138, 43, 226, 0.1) 50%, 
+                rgba(212, 175, 55, 0.1) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 10px 40px rgba(138, 43, 226, 0.3),
+                inset 0 0 60px rgba(212, 175, 55, 0.1);
+            transition: all 0.5s ease;
+        }
+        
+        .mystical-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+        
+        .mystical-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 20px 60px rgba(138, 43, 226, 0.5),
+                inset 0 0 80px rgba(212, 175, 55, 0.2);
+            border-color: rgba(212, 175, 55, 0.6);
+        }
+        
+        .mystical-card h3 {
+            font-family: 'Cinzel Decorative', serif;
+            color: #D4AF37;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .mystical-card p, .mystical-card li {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Epic grid layouts */
+        .sacred-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 50px;
+        }
+        
+        /* Ceremony numbers with mystical style */
+        .ceremony-number {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 4rem;
+            color: #8A2BE2;
+            opacity: 0.3;
+            position: absolute;
+            top: -20px;
+            right: 20px;
+            text-shadow: 0 0 30px rgba(138, 43, 226, 0.8);
+        }
+        
+        /* Navigation with premium style */
+        .navigation {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px 30px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(138, 43, 226, 0.5);
+            cursor: pointer;
+            transition: all 0.5s;
+            position: relative;
+        }
+        
+        .nav-dot::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 175, 55, 0);
+            transition: all 0.5s;
+        }
+        
+        .nav-dot.active {
+            background: #D4AF37;
+            box-shadow: 0 0 20px #D4AF37;
+        }
+        
+        .nav-dot.active::after {
+            border-color: rgba(212, 175, 55, 0.6);
+        }
+        
+        /* CTA Button - Epic style */
+        .cta-epic {
+            display: inline-block;
+            padding: 25px 60px;
+            background: linear-gradient(135deg, #D4AF37 0%, #B8860B 50%, #D4AF37 100%);
+            color: #000;
+            text-decoration: none;
+            font-family: 'Cinzel Decorative', serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            letter-spacing: 0.2rem;
+            border-radius: 50px;
+            margin-top: 50px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s;
+            box-shadow: 
+                0 10px 40px rgba(212, 175, 55, 0.5),
+                inset 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        
+        .cta-epic::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s;
+        }
+        
+        .cta-epic:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 
+                0 20px 60px rgba(212, 175, 55, 0.8),
+                inset 0 0 30px rgba(255, 255, 255, 0.5);
+        }
+        
+        .cta-epic:hover::before {
+            left: 100%;
+        }
+        
+        /* Date location - epic style (удалено, так как больше не используется) */
+        
+        /* Lists with mystical bullets */
+        .mystical-list {
+            list-style: none;
+            text-align: left;
+            margin: 30px 0;
+        }
+        
+        .mystical-list li {
+            padding: 15px 0 15px 40px;
+            position: relative;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .mystical-list li::before {
+            content: '◈';
+            position: absolute;
+            left: 0;
+            color: #D4AF37;
+            font-size: 1.5rem;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+        }
+        
+        .mystical-list li:hover {
+            padding-left: 50px;
+            color: #D4AF37;
+        }
+        
+        /* Special effects for slide 1 */
+        .slide-1 .logo-main {
+            width: 400px;
+            height: 400px;
+            margin: 0 auto 40px;
+            position: relative;
+            filter: drop-shadow(0 0 50px rgba(212, 175, 55, 0.6));
+            animation: float-logo 6s ease-in-out infinite;
+        }
+        
+        @keyframes float-logo {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .slide-1 .logo-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        /* Mountain silhouette for Nepal slides */
+        .mountains {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 300px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 300"><path d="M0,300 L0,150 C200,100 300,50 500,80 C700,110 800,40 1000,70 C1200,100 1400,20 1600,60 C1800,100 1920,120 1920,120 L1920,300 Z" fill="%23000033" opacity="0.6"/><path d="M0,300 L0,200 C150,150 250,100 450,130 C650,160 750,90 950,120 C1150,150 1350,70 1550,110 C1750,150 1920,170 1920,170 L1920,300 Z" fill="%23000044" opacity="0.8"/></svg>') no-repeat bottom;
+            background-size: cover;
+            z-index: 2;
+        }
+        
+        /* Mandala pattern background */
+        .mandala-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            opacity: 0.05;
+            z-index: 1;
+            animation: rotate 120s linear infinite;
+        }
+        
+        /* Premium content list for slide 2 */
+        .content-menu {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .content-menu-item {
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .content-menu-item:hover {
+            padding-left: 20px;
+            border-bottom-color: rgba(212, 175, 55, 0.6);
+        }
+        
+        .content-menu-item .number {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2rem;
+            color: #8A2BE2;
+            margin-right: 30px;
+            text-shadow: 0 0 20px rgba(138, 43, 226, 0.6);
+        }
+        
+        .content-menu-item .text {
+            font-size: 1.2rem;
+            color: #E6E6FA;
+            transition: all 0.3s;
+        }
+        
+        .content-menu-item:hover .text {
+            color: #D4AF37;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Floating particles -->
+        <div class="particles"></div>
+        
+        <!-- Slide 1: Epic Title -->
+        <div class="slide slide-1 active">
+            <div class="logo-container">
+                <svg viewBox="0 0 500 500" style="width: 100%; height: 100%;">
+                    <defs>
+                        <radialGradient id="goldGradient">
+                            <stop offset="0%" style="stop-color:#F4E4C1;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#D4AF37;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#B8860B;stop-opacity:1" />
+                        </radialGradient>
+                    </defs>
+                    <g transform="translate(250,250)">
+                        <circle r="240" fill="none" stroke="url(#goldGradient)" stroke-width="2" opacity="0.3"/>
+                        <circle r="200" fill="none" stroke="url(#goldGradient)" stroke-width="1" opacity="0.3"/>
+                        <circle r="160" fill="none" stroke="url(#goldGradient)" stroke-width="1" opacity="0.3"/>
+                        <path d="M-100,-100 L100,-100 L100,100 L-100,100 Z" fill="none" stroke="url(#goldGradient)" stroke-width="2" opacity="0.3" transform="rotate(45)"/>
+                    </g>
+                </svg>
+            </div>
+            <div class="slide-content" style="display: flex; flex-direction: column; justify-content: space-between; height: 100vh; padding: 80px 60px;">
+                <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+                    <div class="subtitle">ТЕХНОЛОГИЯ, КОТОРАЯ ИЗМЕНИТ ТРАЕКТОРИЮ ВАШЕЙ СУДЬБЫ</div>
+                    <h1 class="title-main" style="margin: 30px 0;">ХРАМ<br>ВОЗНЕСЕНИЯ</h1>
+                    <div class="epic-subtitle" style="margin-bottom: 30px;">УПРАВЛЯЕМАЯ РЕИНКАРНАЦИЯ ПРИ ЖИЗНИ</div>
+                    <div class="subtitle">МЫ ВОССТАНОВИЛИ УТРАЧЕННЫЙ ПРОТОКОЛ</div>
+                </div>
+                <div style="text-align: center; padding-bottom: 40px;">
+                    <div style="font-size: 1.4rem; letter-spacing: 0.5rem; color: #D4AF37; text-shadow: 0 0 20px rgba(212, 175, 55, 0.6); font-family: 'Bodoni Moda', serif;">
+                        НЕПАЛ ◈ СЕНТЯБРЬ 2025
+                    </div>
+                    <div style="font-size: 1.6rem; letter-spacing: 0.4rem; color: #8A2BE2; margin-top: 15px; text-shadow: 0 0 25px rgba(138, 43, 226, 0.8); font-family: 'Cinzel Decorative', serif; font-weight: 600;">
+                        6-10 ДНЕЙ
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 2: Contents with premium style -->
+        <div class="slide">
+            <div class="mandala-bg">
+                <svg viewBox="0 0 800 800" style="width: 100%; height: 100%; opacity: 0.5;">
+                    <defs>
+                        <pattern id="mandalaPattern" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
+                            <circle cx="100" cy="100" r="80" fill="none" stroke="#8A2BE2" stroke-width="0.5"/>
+                            <circle cx="100" cy="100" r="60" fill="none" stroke="#8A2BE2" stroke-width="0.5"/>
+                            <circle cx="100" cy="100" r="40" fill="none" stroke="#8A2BE2" stroke-width="0.5"/>
+                            <rect x="60" y="60" width="80" height="80" fill="none" stroke="#8A2BE2" stroke-width="0.5" transform="rotate(45 100 100)"/>
+                        </pattern>
+                    </defs>
+                    <rect width="800" height="800" fill="url(#mandalaPattern)"/>
+                </svg>
+            </div>
+            <div class="slide-content">
+                <h2 class="title-secondary">ПУТЬ ИНИЦИАЦИИ</h2>
+                <div class="content-menu">
+                    <div class="content-menu-item">
+                        <span class="number">01</span>
+                        <span class="text">Что такое Храм Вознесения</span>
+                    </div>
+                    <div class="content-menu-item">
+                        <span class="number">02</span>
+                        <span class="text">Почему Непал — вершина трансформации</span>
+                    </div>
+                    <div class="content-menu-item">
+                        <span class="number">03</span>
+                        <span class="text">Хранители древнего знания</span>
+                    </div>
+                    <div class="content-menu-item">
+                        <span class="number">04</span>
+                        <span class="text">Технология управляемой реинкарнации</span>
+                    </div>
+                    <div class="content-menu-item">
+                        <span class="number">05</span>
+                        <span class="text">Программа инициации</span>
+                    </div>
+                    <div class="content-menu-item">
+                        <span class="number">06</span>
+                        <span class="text">Трансформация и ROI</span>
+                    </div>
+                    <div class="content-menu-item">
+                        <span class="number">07</span>
+                        <span class="text">Церемониальное пространство</span>
+                    </div>
+                    <div class="content-menu-item">
+                        <span class="number">08</span>
+                        <span class="text">Философия перерождения при жизни</span>
+                    </div>
+                    <div class="content-menu-item">
+                        <span class="number">09</span>
+                        <span class="text">Расписание</span>
+                    </div>
+                    <div class="content-menu-item">
+                        <span class="number">10</span>
+                        <span class="text">Эксклюзивность и сервис</span>
+                    </div>
+                    <div class="content-menu-item">
+                        <span class="number">11</span>
+                        <span class="text">Закрытый клуб визионеров</span>
+                    </div>
+                    <div class="content-menu-item">
+                        <span class="number">12</span>
+                        <span class="text">Постпрограммная поддержка</span>
+                    </div>
+                    <div class="content-menu-item">
+                        <span class="number">13</span>
+                        <span class="text">Ваш путь аватара</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 3: About with mystical design -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="title-secondary">ХРАМ ВОЗНЕСЕНИЯ</h2>
+                <div class="epic-subtitle">Древняя технология перерождения</div>
+                
+                <div class="mystical-card" style="max-width: 900px; margin: 40px auto;">
+                    <p style="font-size: 1.3rem; line-height: 1.8; margin-bottom: 30px;">
+                        Через <span class="highlight">управляемую реинкарнацию при жизни</span> вы изгоняете паразитов сознания, 
+                        питающихся человеческим страданием веками, и рождаетесь заново как <span class="highlight">аватар</span> — 
+                        живое доказательство того, что человек может стать проводником божественной воли, сохранив физическое тело.
+                    </p>
+                    
+                    <p style="font-size: 2rem; color: #D4AF37; text-align: center; margin: 40px 0; font-family: 'Cinzel Decorative', serif;">
+                        ЭТО НЕ МЕТАФОРА
+                    </p>
+                    
+                    <p style="font-size: 1.2rem; margin-bottom: 30px;">Это точная технология, объединяющая:</p>
+                    
+                    <ul class="mystical-list">
+                        <li>Протоколы Тибетской книги мертвых</li>
+                        <li>Амазонский экзорцизм изгнания сущностей</li>
+                        <li>Непальские ритуалы освобождения сознания</li>
+                    </ul>
+                    
+                    <p style="font-size: 1.4rem; text-align: center; margin-top: 40px; color: #8A2BE2;">
+                        За 6-10 дней вы пройдете через <span class="highlight">цикл трансформации</span>, встретитесь с Высшими божественными созданиями 
+                        и вернетесь как их представитель на Земле.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 4: Location - Nepal -->
+        <div class="slide">
+            <div class="mountains"></div>
+            <div class="slide-content">
+                <h2 class="title-secondary">НЕПАЛ — ВЕРШИНА МИРА</h2>
+                <div class="epic-subtitle">Портал трансформации</div>
+                
+                <div class="mystical-card" style="margin: 40px auto; max-width: 800px;">
+                    <h3 style="text-align: center; margin-bottom: 30px;">Секретное место в долине Катманду</h3>
+                    <p style="text-align: center; font-size: 1.2rem; color: #C9B6DB;">
+                        Уединенное пространство силы, где веками проводились инициации высшего порядка
+                    </p>
+                </div>
+                
+                <div class="sacred-grid" style="max-width: 1000px; margin: 0 auto;">
+                    <div class="mystical-card">
+                        <div class="ceremony-number">I</div>
+                        <h3>Средоточие духовных учений</h3>
+                        <p>Место встречи всех мистических традиций планеты, где хранятся коды трансформации человеческого сознания</p>
+                    </div>
+                    <div class="mystical-card">
+                        <div class="ceremony-number">II</div>
+                        <h3>Энергетический центр планеты</h3>
+                        <p>Точка схождения измерений, где границы между мирами становятся проницаемыми для подготовленного сознания</p>
+                    </div>
+                    <div class="mystical-card">
+                        <div class="ceremony-number">III</div>
+                        <h3>Хранилище древних протоколов</h3>
+                        <p>Священные тексты и живые линии передачи технологий управляемой смерти и перерождения</p>
+                    </div>
+                    <div class="mystical-card">
+                        <div class="ceremony-number">IV</div>
+                        <h3>Портал к высшим измерениям</h3>
+                        <p>Каждый храм — технология, каждая гора — антенна к космическому сознанию</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 5: Masters with epic bio cards -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="title-secondary">ХРАНИТЕЛИ ПРОТОКОЛА ВОЗНЕСЕНИЯ</h2>
+                
+                <div class="sacred-grid" style="margin-top: 50px;">
+                    <div class="mystical-card">
+                        <h3>OLENA RUTA</h3>
+                        <div class="subtitle" style="color: #8A2BE2; margin-bottom: 20px;">Целитель</div>
+                        <p>Восстановившая древние коды инициации. Прошла обучение у носителей традиций Амазонии и Тибета. 
+                        Специализация: трансформация родовых матриц и перепрограммирование личностных алгоритмов на уровне квантового поля.</p>
+                    </div>
+                    
+                    <div class="mystical-card">
+                        <h3>ЦЕЛИТЕЛЬ СЕРГИЙ</h3>
+                        <div class="subtitle" style="color: #8A2BE2; margin-bottom: 20px;">Проводник между мирами</div>
+                        <p>Посвященный шаман амазонской традиции, мастер работы с тонкими телами. Провел более 1000 церемоний изгнания сущностей. 
+                        Обучался у старейшин племен Кечуа. Практик ведических знаний и ритуалов.</p>
+                    </div>
+                    
+                    <div class="mystical-card">
+                        <h3>ПРИГЛАШЕННЫЕ ШАМАНЫ АМАЗОНИИ</h3>
+                        <p>Носители живой традиции племен Кечуа, специально приглашенные для проведения церемоний. Владеющие песнями власти, открывающими порталы между измерениями 
+                        и изгоняющими паразитические программы из энергетического поля человека.</p>
+                    </div>
+                    
+                    <div class="mystical-card">
+                        <h3>ПОСВЯЩЕННЫЕ ШАМАНЫ ТИБЕТА</h3>
+                        <p>Хранители тайных практик Бардо и протоколов сознательного умирания. 
+                        Мастера тантрических ритуалов освобождения, передающие знание через прямую передачу за пределами слов.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 6: Technology of Death -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="title-secondary">УПРАВЛЯЕМАЯ РЕИНКАРНАЦИЯ</h2>
+                <div class="epic-subtitle">Древний протокол перерождения</div>
+                
+                <div class="mystical-card" style="max-width: 900px; margin: 40px auto;">
+                    <p style="font-size: 1.3rem; text-align: center; margin-bottom: 30px;">
+                        <span class="highlight">Паразиты сознания</span> — это не миф.<br>
+                        Это энергетические структуры, питающиеся страхом, болью, ограничениями.<br>
+                        Они передаются через поколения, встраиваются в ДНК, управляют выборами.
+                    </p>
+                </div>
+                
+                <h3 style="color: #D4AF37; text-align: center; margin: 40px 0; font-size: 2rem;">
+                    4 ЦЕРЕМОНИИ = 4 УРОВНЯ ТРАНСФОРМАЦИИ
+                </h3>
+                
+                <div class="sacred-grid">
+                    <div class="mystical-card">
+                        <div class="ceremony-number">1</div>
+                        <h3>Освобождение физического уровня</h3>
+                        <p>Трансформация отождествления с телом. Выход за пределы материальной иллюзии.</p>
+                    </div>
+                    <div class="mystical-card">
+                        <div class="ceremony-number">2</div>
+                        <h3>Очищение эмоционального тела</h3>
+                        <p>Изгнание сущностей, питающихся драмой. Освобождение от чужеродных программ.</p>
+                    </div>
+                    <div class="mystical-card">
+                        <div class="ceremony-number">3</div>
+                        <h3>Кармическое очищение</h3>
+                        <p>Трансформация родовых программ и освобождение от кармических контрактов всех воплощений.</p>
+                    </div>
+                    <div class="mystical-card">
+                        <div class="ceremony-number">4</div>
+                        <h3>Реинкарнация при жизни</h3>
+                        <p>Растворение старой личности и рождение аватара — проводника божественной воли.</p>
+                    </div>
+                </div>
+                
+                <p style="text-align: center; margin-top: 40px; font-size: 1.2rem; color: #C9B6DB;">
+                    Каждая церемония проводится по протоколу Бардо Тхёдол<br>
+                    с применением священных растений силы и звуковых технологий экзорцизма.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Slide 7: Program Structure -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="title-secondary">СТРУКТУРА ИНИЦИАЦИИ</h2>
+                
+                <div class="sacred-grid" style="margin-top: 50px;">
+                    <div class="mystical-card">
+                        <h3>МАСТЕРА И ПРОВОДНИКИ</h3>
+                        <ul class="mystical-list">
+                            <li>Шаманы линии передачи Кечуа и тибетских тантр</li>
+                            <li>Учителя кундалини-йоги и пранаямы</li>
+                            <li>Мастера медитации состояния Бардо</li>
+                            <li>Музыканты-церемониалисты с инструментами силы</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mystical-card">
+                        <h3>ЕЖЕДНЕВНЫЕ ПРАКТИКИ</h3>
+                        <ul class="mystical-list">
+                            <li>Утренние активации через древние тибетские практики</li>
+                            <li>Дыхание огня для глубинной трансформации</li>
+                            <li>Медитации растворения для подготовки к церемониям</li>
+                            <li>Звуковые ванны с тибетскими чашами</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mystical-card" style="margin-top: 40px;">
+                    <h3 style="text-align: center;">САКРАЛЬНЫЕ ПОСЕЩЕНИЯ</h3>
+                    <div style="display: flex; justify-content: space-around; margin-top: 30px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; color: #8A2BE2;">◈</div>
+                            <p>Древние храмы<br>долины Катманду</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; color: #8A2BE2;">◈</div>
+                            <p>Места силы<br>для интеграции</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; color: #8A2BE2;">◈</div>
+                            <p>Ритуалы в энергетических<br>точках Непала</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 8: Transformation & ROI -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="title-secondary">ТРАНСФОРМАЦИЯ УРОВНЯ АВАТАРА</h2>
+                
+                <div class="sacred-grid">
+                    <div class="mystical-card">
+                        <h3>НЕМЕДЛЕННЫЕ ИЗМЕНЕНИЯ</h3>
+                        <ul class="mystical-list">
+                            <li>Изгнание энергетических паразитов</li>
+                            <li>Освобождение от родовых программ</li>
+                            <li>Прямой канал к Источнику</li>
+                            <li>Активация способностей аватара</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mystical-card">
+                        <h3>БИЗНЕС-РЕЗУЛЬТАТЫ</h3>
+                        <ul class="mystical-list">
+                            <li>Квантовый скачок в принятии стратегических решений</li>
+                            <li>Доступ к инновационным решениям через расширенное восприятие</li>
+                            <li>Интуитивное лидерство, опережающее рынок на 3-5 лет</li>
+                            <li>Способность видеть скрытые возможности и точки роста</li>
+                            <li>Харизма и влияние уровня основателей империй</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mystical-card">
+                        <h3>ДОЛГОСРОЧНАЯ ПЕРЕЗАГРУЗКА</h3>
+                        <ul class="mystical-list">
+                            <li>Иммунитет к манипуляциям реальности</li>
+                            <li>Способность создавать, а не следовать</li>
+                            <li>Видение истинной структуры мироздания</li>
+                            <li>Статус проводника божественной воли</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mystical-card">
+                        <h3>ROI ТРАНСФОРМАЦИИ</h3>
+                        <ul class="mystical-list">
+                            <li>Окупаемость через одно прорывное решение</li>
+                            <li>Новый уровень влияния = новый уровень ресурсов</li>
+                            <li>Доступ к возможностям, невидимым конкурентам</li>
+                            <li>Синхронизация с глобальными трендами до их проявления</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 50px;">
+                    <p style="font-size: 1.4rem; color: #D4AF37;">Вы вернетесь не улучшенной версией себя.</p>
+                    <p style="font-size: 1.6rem; color: #8A2BE2; margin-top: 20px;">
+                        Вы вернетесь принципиально другим существом —<br>
+                        с правами администратора в матрице консенсусной реальности.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 9: Ceremonial Space -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="title-secondary">СВЯЩЕННАЯ АЛХИМИЯ ТРАНСФОРМАЦИИ</h2>
+                
+                <div class="mystical-card" style="margin: 40px auto;">
+                    <h3 style="text-align: center;">МУЗЫКА ПЕРЕХОДА</h3>
+                    <p style="text-align: center; font-size: 1.2rem; margin-top: 20px;">
+                        Священные песни шаманов сплетаются с тибетскими мантрами,<br>
+                        создавая звуковой портал для навигации в пространстве Бардо.
+                    </p>
+                </div>
+                
+                <div class="sacred-grid">
+                    <div class="mystical-card">
+                        <h3>ЦЕРЕМОНИАЛЬНАЯ КУХНЯ</h3>
+                        <p>Специальное питание по протоколам очищения:</p>
+                        <ul class="mystical-list" style="margin-top: 20px;">
+                            <li>Диета для подготовки к Священным церемониям</li>
+                            <li>Пища, усиливающая восприятие тонких миров</li>
+                            <li>Травы и эликсиры для интеграции</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mystical-card">
+                        <h3>КРУГ СИЛЫ</h3>
+                        <p>Группа ограничена. Только те, кто готов к реинкарнации при жизни.</p>
+                        <p style="margin-top: 20px; color: #D4AF37;">Каждый участник усиливает поле трансформации для всех.</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 50px;">
+                    <div style="font-size: 4rem; color: #8A2BE2; text-shadow: 0 0 40px rgba(138, 43, 226, 0.8);">◈ ◈ ◈</div>
+                    <p style="font-size: 1.3rem; color: #C9B6DB; margin-top: 20px;">
+                        Священное пространство, где растворяются границы между мирами
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 10: Philosophy -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="title-secondary">РЕИНКАРНАЦИЯ КАК ТЕХНОЛОГИЯ UPGRADE</h2>
+                
+                <div class="mystical-card" style="max-width: 900px; margin: 40px auto;">
+                    <p style="font-size: 1.5rem; text-align: center; margin-bottom: 40px;">
+                        Тысячелетиями эзотерические школы хранили секрет:<br>
+                        <span class="highlight">смерть — это не конец, а инструмент</span>
+                    </p>
+                    
+                    <div style="text-align: center; margin: 40px 0;">
+                        <div style="font-size: 6rem; color: #8A2BE2; text-shadow: 0 0 60px rgba(138, 43, 226, 0.8);">☥</div>
+                    </div>
+                    
+                    <p style="font-size: 1.3rem; margin-bottom: 30px;">Правильно проведенная смерть при жизни:</p>
+                    <ul class="mystical-list" style="font-size: 1.2rem;">
+                        <li>Обнуляет кармические долги всех воплощений</li>
+                        <li>Разрывает контракты с паразитами сознания</li>
+                                                    <li>Открывает прямой канал к Высшим божественным созданиям</li>
+                        <li>Дает права на создание новых миров</li>
+                    </ul>
+                </div>
+                
+                <div style="text-align: center; margin-top: 50px;">
+                    <p style="font-size: 1.4rem; color: #D4AF37;">
+                        <span class="highlight">Храм Вознесения</span> — это возрождение этой технологии<br>
+                        для тех, кто устал быть пешкой в чужой игре.
+                    </p>
+                    <p style="font-size: 1.3rem; color: #8A2BE2; margin-top: 30px;">
+                        Личная власть через благословение Высших божественных созданий —<br>
+                        когда вы становитесь их представителем, ваши решения обретают силу неизбежности.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 11: Schedule -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="title-secondary">АРХИТЕКТУРА ПЕРЕРОЖДЕНИЯ</h2>
+                
+                <div class="sacred-grid">
+                    <div class="mystical-card">
+                        <div class="ceremony-number">I</div>
+                        <h3>ДЕНЬ 1: ПОДГОТОВКА</h3>
+                        <ul class="mystical-list">
+                            <li>Очищение и настройка</li>
+                            <li>Обучение навигации в Бардо</li>
+                            <li>Первые практики растворения</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mystical-card">
+                        <div class="ceremony-number">II-V</div>
+                        <h3>ДЕНЬ 2-5: СВЯЩЕННЫЕ ЦЕРЕМОНИИ</h3>
+                        <ul class="mystical-list">
+                            <li>Проживание цикла реинкарнации</li>
+                            <li>Трансформация на всех уровнях бытия</li>
+                            <li>Интеграция и восстановление</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mystical-card">
+                        <div class="ceremony-number">VI-VII</div>
+                        <h3>ДЕНЬ 6-7: КАРМИЧЕСКОЕ ОЧИЩЕНИЕ</h3>
+                        <ul class="mystical-list">
+                            <li>Церемонии кармического очищения</li>
+                            <li>Рождение аватара</li>
+                            <li>Активация новых способностей</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mystical-card">
+                        <div class="ceremony-number">VIII-X</div>
+                        <h3>ДЕНЬ 8-10: ИНТЕГРАЦИЯ</h3>
+                        <ul class="mystical-list">
+                            <li>Обучение жизни в новом состоянии</li>
+                            <li>Посещение сакральных мест</li>
+                            <li>Создание нового жизненного кода</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 12: Exclusivity -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="title-secondary">УРОВЕНЬ, ДОСТОЙНЫЙ ВАШЕГО СТАТУСА</h2>
+                
+                <div class="sacred-grid">
+                    <div class="mystical-card">
+                        <h3>ПОЛНАЯ КОНФИДЕНЦИАЛЬНОСТЬ</h3>
+                        <ul class="mystical-list">
+                            <li>NDA для всего персонала</li>
+                            <li>Закрытая территория без посторонних</li>
+                            <li>Запрет на любые записывающие устройства</li>
+                            <li>Никаких списков участников</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mystical-card">
+                        <h3>ПРЕМИУМ-СЕРВИС</h3>
+                        <ul class="mystical-list">
+                            <li>Персональный ассистент 24/7</li>
+                            <li>Приватный трансфер и VIP-логистика</li>
+                            <li>Индивидуальная адаптация программы</li>
+                            <li>Личный переводчик при необходимости</li>
+                            <li>Связь с личным врачом в любой момент</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mystical-card">
+                        <h3>ТЕХНОЛОГИИ ТРАНСФОРМАЦИИ</h3>
+                        <ul class="mystical-list">
+                            <li>Апгрейд операционной системы сознания</li>
+                            <li>Биохакинг на квантовом уровне</li>
+                            <li>Нейропластичность под управлением</li>
+                            <li>Эпигенетическое перепрограммирование</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mystical-card">
+                        <h3>БЕЗУПРЕЧНОСТЬ ИСПОЛНЕНИЯ</h3>
+                        <ul class="mystical-list">
+                            <li>Медицинская команда на месте</li>
+                            <li>Психологическая поддержка 24/7</li>
+                            <li>Индивидуальное меню от шеф-повара</li>
+                            <li>Люксовое размещение</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 13: Visionary Club -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="title-secondary">КЛУБ ВИЗИОНЕРОВ</h2>
+                <div class="epic-subtitle">Те, кто изменили мир после встречи с растениями-учителями</div>
+                
+                <div class="mystical-card" style="max-width: 900px; margin: 40px auto;">
+                    <p style="font-size: 1.3rem; margin-bottom: 40px;">
+                        История знает множество лидеров, чьи прорывные решения пришли после опыта с сакральными растениями:
+                    </p>
+                    
+                    <ul class="mystical-list" style="font-size: 1.1rem;">
+                        <li><span class="highlight">Основатели технологических империй</span> признавались в том, что их видение будущего открылось в церемониях</li>
+                        <li><span class="highlight">Нобелевские лауреаты</span> находили решения сложнейших задач через расширенное восприятие</li>
+                        <li><span class="highlight">Создатели мировых брендов</span> черпали вдохновение из опыта единства</li>
+                    </ul>
+                </div>
+                
+                <div class="mystical-card" style="max-width: 900px; margin: 40px auto;">
+                    <h3 style="text-align: center;">ЗАКРЫТОЕ СООБЩЕСТВО ВЫПУСКНИКОВ</h3>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-top: 30px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; color: #D4AF37;">◈</div>
+                            <p>CEO глобальных корпораций</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; color: #D4AF37;">◈</div>
+                            <p>Основатели инвестиционных фондов</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; color: #D4AF37;">◈</div>
+                            <p>Создатели прорывных технологий</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; color: #D4AF37;">◈</div>
+                            <p>Лидеры трансформации индустрий</p>
+                        </div>
+                    </div>
+                    <p style="text-align: center; margin-top: 30px; font-style: italic; color: #C9B6DB;">
+                        *Имена не разглашаются, но результаты говорят сами за себя
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 14: Post-Program Support -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="title-secondary">ИНТЕГРАЦИЯ УРОВНЯ АВАТАРА</h2>
+                
+                <div class="sacred-grid">
+                    <div class="mystical-card">
+                        <h3>3 МЕСЯЦА ПЕРСОНАЛЬНОГО СОПРОВОЖДЕНИЯ</h3>
+                        <ul class="mystical-list">
+                            <li>Еженедельные сессии с Olena Ruta</li>
+                            <li>Экстренная поддержка 24/7</li>
+                            <li>Корректировка процессов интеграции</li>
+                            <li>Персональные практики для закрепления</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mystical-card">
+                        <h3>ЗАКРЫТЫЙ КЛУБ TEMPLE</h3>
+                        <ul class="mystical-list">
+                            <li>Ежемесячные встречи в разных странах</li>
+                            <li>Обмен опытом и ресурсами</li>
+                            <li>Совместные проекты изменения мира</li>
+                            <li>Доступ к инвестиционным возможностям</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mystical-card">
+                        <h3>ЭКСКЛЮЗИВНЫЕ ПРАКТИКИ</h3>
+                        <ul class="mystical-list">
+                            <li>Доступ к продвинутым протоколам</li>
+                            <li>Обновления технологий сознания</li>
+                            <li>Приглашения на закрытые церемонии</li>
+                            <li>Личная библиотека сакральных текстов</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mystical-card">
+                        <h3>БИЗНЕС-СИНЕРГИЯ</h3>
+                        <ul class="mystical-list">
+                            <li>Инвестиционные возможности внутри сообщества</li>
+                            <li>Партнерства на новом уровне доверия</li>
+                            <li>Коллективное создание будущего</li>
+                            <li>Доступ к закрытым сделкам</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 15: Epic CTA -->
+        <div class="slide">
+            <div class="logo-container">
+                <svg viewBox="0 0 500 500" style="width: 100%; height: 100%;">
+                    <defs>
+                        <radialGradient id="goldGradient2">
+                            <stop offset="0%" style="stop-color:#F4E4C1;stop-opacity:0.5" />
+                            <stop offset="50%" style="stop-color:#D4AF37;stop-opacity:0.5" />
+                            <stop offset="100%" style="stop-color:#B8860B;stop-opacity:0.5" />
+                        </radialGradient>
+                    </defs>
+                    <g transform="translate(250,250)">
+                        <circle r="240" fill="none" stroke="url(#goldGradient2)" stroke-width="2"/>
+                        <circle r="200" fill="none" stroke="url(#goldGradient2)" stroke-width="1"/>
+                        <circle r="160" fill="none" stroke="url(#goldGradient2)" stroke-width="1"/>
+                    </g>
+                </svg>
+            </div>
+            <div class="slide-content">
+                <h2 class="title-secondary">ГОТОВЫ ЛИ ВЫ К КВАНТОВОМУ СКАЧКУ ВАШЕЙ РЕАЛЬНОСТИ?</h2>
+                
+                <div style="margin-top: 50px;">
+                    <p style="font-size: 2rem; color: #D4AF37; margin-bottom: 40px;">
+                        Храм Вознесения открывает врата<br>
+                        СЕНТЯБРЬ 2025
+                    </p>
+                    
+                    <div style="margin: 50px 0;">
+                        <p style="font-size: 1.4rem; margin-bottom: 20px;">
+                            Это не ретрит.<br>
+                            <span class="highlight">Это инициация в новый уровень власти.</span>
+                        </p>
+                        
+                        <p style="font-size: 1.4rem; margin-bottom: 20px;">
+                            Это не исцеление.<br>
+                            <span class="highlight">Это перерождение с сохранением всех активов.</span>
+                        </p>
+                        
+                        <p style="font-size: 1.4rem; margin-bottom: 40px;">
+                            Это не путь к просветлению.<br>
+                            <span class="highlight">Это становление архитектором реальности.</span>
+                        </p>
+                    </div>
+                    
+                    <p style="font-size: 1.2rem; color: #C9B6DB; margin-bottom: 20px;">
+                        Места крайне ограничены.<br>
+                        Отбор участников через личное собеседование.
+                    </p>
+                    
+                    <p style="font-size: 1.3rem; margin-bottom: 50px;">
+                        <span class="highlight">ИНВЕСТИЦИЯ В ТРАНСФОРМАЦИЮ:</span><br>
+                        По запросу после собеседования
+                    </p>
+                    
+                    <a href="#" class="cta-epic">РЕГИСТРАЦИЯ НА КОНФИДЕНЦИАЛЬНОЕ СОБЕСЕДОВАНИЕ</a>
+                    
+                    <p style="margin-top: 60px; font-style: italic; font-size: 1.1rem; color: #8A2BE2;">
+                        "Единственный способ превзойти конкурентов — играть в другой реальности"<br>
+                        <span style="font-size: 0.9rem; color: #C9B6DB;">Из закрытых бесед Temple Club</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Navigation -->
+        <div class="navigation">
+            <div class="nav-dot active" data-slide="0"></div>
+            <div class="nav-dot" data-slide="1"></div>
+            <div class="nav-dot" data-slide="2"></div>
+            <div class="nav-dot" data-slide="3"></div>
+            <div class="nav-dot" data-slide="4"></div>
+            <div class="nav-dot" data-slide="5"></div>
+            <div class="nav-dot" data-slide="6"></div>
+            <div class="nav-dot" data-slide="7"></div>
+            <div class="nav-dot" data-slide="8"></div>
+            <div class="nav-dot" data-slide="9"></div>
+            <div class="nav-dot" data-slide="10"></div>
+            <div class="nav-dot" data-slide="11"></div>
+            <div class="nav-dot" data-slide="12"></div>
+            <div class="nav-dot" data-slide="13"></div>
+            <div class="nav-dot" data-slide="14"></div>
+        </div>
+    </div>
+    
+    <script>
+        // Create floating particles
+        const particlesContainer = document.querySelector('.particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (20 + Math.random() * 20) + 's';
+            particlesContainer.appendChild(particle);
+        }
+        
+        // Slide navigation
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.nav-dot');
+        
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+            currentSlide = index;
+        }
+        
+        // Click navigation
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => showSlide(index));
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            } else if (e.key === 'ArrowRight' && currentSlide < slides.length - 1) {
+                showSlide(currentSlide + 1);
+            }
+        });
+        
+        // Swipe navigation for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50 && currentSlide < slides.length - 1) {
+                showSlide(currentSlide + 1);
+            }
+            if (touchEndX > touchStartX + 50 && currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+    </script>
+</body>
+</html>
