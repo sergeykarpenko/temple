@@ -3,14 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Храм Вознесения - Презентация</title>
+    <title>Храм Вознесения - Портал Трансформации</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600;6..96,800&family=Raleway:wght@200;300;400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;0,6..96,600;0,6..96,800;1,6..96,400&family=Raleway:wght@200;300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            cursor: none;
+        }
+        
+        /* Custom Cursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #D4AF37;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease-out;
+            mix-blend-mode: difference;
+        }
+        
+        .cursor-follower {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.3s ease-out;
+            opacity: 0.5;
+        }
+        
+        .cursor.hover {
+            transform: scale(2);
+            background: rgba(212, 175, 55, 0.2);
         }
         
         body {
@@ -18,6 +49,77 @@
             background: #000;
             color: #fff;
             overflow: hidden;
+            position: relative;
+        }
+        
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+        
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .mandala-loader {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            animation: mandalaRotate 4s linear infinite;
+        }
+        
+        @keyframes mandalaRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .mandala-loader svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Sound toggle */
+        .sound-toggle {
+            position: fixed;
+            bottom: 40px;
+            left: 40px;
+            width: 50px;
+            height: 50px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .sound-toggle:hover {
+            background: rgba(212, 175, 55, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .sound-toggle.muted::after {
+            content: '🔇';
+            font-size: 20px;
+        }
+        
+        .sound-toggle:not(.muted)::after {
+            content: '🔊';
+            font-size: 20px;
         }
         
         .presentation-container {
@@ -28,8 +130,8 @@
             background: #000;
         }
         
-        /* Mystical particles background */
-        .particles {
+        /* Enhanced particles with different types */
+        .particles-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -41,29 +143,117 @@
         
         .particle {
             position: absolute;
-            width: 2px;
-            height: 2px;
-            background: #D4AF37;
             border-radius: 50%;
-            opacity: 0;
-            animation: float 20s infinite;
+            pointer-events: none;
         }
         
-        @keyframes float {
-            0% {
+        .particle.gold {
+            width: 3px;
+            height: 3px;
+            background: radial-gradient(circle, #D4AF37 0%, transparent 70%);
+            box-shadow: 0 0 6px #D4AF37;
+            animation: floatGold 25s infinite ease-in-out;
+        }
+        
+        .particle.purple {
+            width: 2px;
+            height: 2px;
+            background: radial-gradient(circle, #8A2BE2 0%, transparent 70%);
+            box-shadow: 0 0 4px #8A2BE2;
+            animation: floatPurple 30s infinite ease-in-out;
+        }
+        
+        .particle.star {
+            width: 1px;
+            height: 1px;
+            background: #fff;
+            box-shadow: 0 0 2px #fff;
+            animation: twinkle 5s infinite;
+        }
+        
+        @keyframes floatGold {
+            0%, 100% {
+                transform: translateY(100vh) translateX(0) scale(0);
                 opacity: 0;
-                transform: translateY(100vh) scale(0);
             }
             10% {
                 opacity: 1;
             }
+            50% {
+                transform: translateY(-50vh) translateX(100px) scale(1.5);
+            }
             90% {
                 opacity: 1;
             }
-            100% {
+        }
+        
+        @keyframes floatPurple {
+            0%, 100% {
+                transform: translateY(100vh) translateX(0) scale(0);
                 opacity: 0;
-                transform: translateY(-100vh) scale(1.5);
             }
+            10% {
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateY(-50vh) translateX(-80px) scale(1.2);
+            }
+            90% {
+                opacity: 0.8;
+            }
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        
+        /* Sacred geometry background - enhanced */
+        .sacred-geometry {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150%;
+            height: 150%;
+            opacity: 0.02;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .sacred-geometry svg {
+            width: 100%;
+            height: 100%;
+            animation: sacredRotate 120s linear infinite;
+        }
+        
+        @keyframes sacredRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Energy field effect */
+        .energy-field {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, 
+                transparent 0%, 
+                rgba(138, 43, 226, 0.05) 20%,
+                rgba(212, 175, 55, 0.03) 40%,
+                rgba(75, 0, 130, 0.08) 60%,
+                transparent 100%);
+            animation: energyPulse 8s ease-in-out infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        @keyframes energyPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
         }
         
         .slide {
@@ -74,47 +264,48 @@
             align-items: center;
             justify-content: center;
             opacity: 0;
-            transition: opacity 1.5s ease-in-out;
+            visibility: hidden;
+            transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
         }
         
         .slide.active {
             opacity: 1;
+            visibility: visible;
         }
         
-        /* Epic backgrounds */
-        .slide::before {
-            content: '';
+        .slide.active .slide-content {
+            animation: contentReveal 1.5s ease-out forwards;
+        }
+        
+        @keyframes contentReveal {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Mystical fog effect */
+        .fog {
             position: absolute;
-            top: -50%;
-            left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(ellipse at center, 
-                rgba(75, 0, 130, 0.3) 0%, 
-                rgba(25, 0, 51, 0.6) 30%, 
-                rgba(0, 0, 0, 0.9) 70%);
-            animation: rotate 60s linear infinite;
-            z-index: 0;
+            top: -50%;
+            left: -50%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><filter id="fog"><feTurbulence baseFrequency="0.01" numOctaves="2" /><feColorMatrix values="0 0 0 0 0.5 0 0 0 0 0.3 0 0 0 0 0.8 0 0 0 0.1 0"/></filter></defs><rect width="100%" height="100%" filter="url(%23fog)" /></svg>');
+            opacity: 0.3;
+            animation: fogDrift 30s linear infinite;
+            z-index: 2;
+            pointer-events: none;
         }
         
-        .slide::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(75, 0, 130, 0.1) 0%, transparent 50%);
-            z-index: 1;
-        }
-        
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        @keyframes fogDrift {
+            from { transform: translateX(0) translateY(0); }
+            to { transform: translateX(-50%) translateY(-50%); }
         }
         
         .slide-content {
@@ -126,142 +317,113 @@
             width: 90%;
         }
         
-        /* Sacred geometry background */
-        .sacred-bg {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 120%;
-            height: 120%;
-            opacity: 0.03;
-            z-index: 0;
-        }
-        
-        .sacred-bg svg {
-            width: 100%;
-            height: 100%;
-        }
-        
-        /* Typography - Epic style */
+        /* Enhanced typography with breathing effect */
         .title-main {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 6rem;
+            font-size: clamp(3rem, 8vw, 7rem);
             font-weight: 900;
             background: linear-gradient(
-                45deg,
+                -45deg,
                 #D4AF37 0%,
-                #F4E4C1 20%,
-                #D4AF37 40%,
-                #B8860B 60%,
-                #D4AF37 80%,
-                #F4E4C1 100%
+                #F4E4C1 15%,
+                #D4AF37 30%,
+                #B8860B 45%,
+                #FFD700 60%,
+                #D4AF37 75%,
+                #F4E4C1 90%,
+                #D4AF37 100%
             );
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-transform: uppercase;
             letter-spacing: 0.5rem;
             margin-bottom: 30px;
-            text-shadow: 
-                0 0 40px rgba(212, 175, 55, 0.8),
-                0 0 80px rgba(212, 175, 55, 0.5),
-                0 0 120px rgba(212, 175, 55, 0.3);
             line-height: 0.9;
+            animation: goldShimmer 8s ease-in-out infinite, breathe 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.6));
+        }
+        
+        @keyframes goldShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .title-secondary {
+            font-family: 'Bodoni Moda', serif;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 600;
+            color: #D4AF37;
+            margin-bottom: 40px;
+            text-shadow: 
+                0 0 30px rgba(212, 175, 55, 0.6),
+                0 0 60px rgba(138, 43, 226, 0.3);
+            letter-spacing: 0.3rem;
             animation: glow 3s ease-in-out infinite alternate;
         }
         
         @keyframes glow {
             from {
-                filter: brightness(1) drop-shadow(0 0 30px rgba(212, 175, 55, 0.8));
+                text-shadow: 
+                    0 0 30px rgba(212, 175, 55, 0.6),
+                    0 0 60px rgba(138, 43, 226, 0.3);
             }
             to {
-                filter: brightness(1.2) drop-shadow(0 0 50px rgba(212, 175, 55, 1));
+                text-shadow: 
+                    0 0 40px rgba(212, 175, 55, 0.8),
+                    0 0 80px rgba(138, 43, 226, 0.5);
             }
-        }
-        
-        .title-secondary {
-            font-family: 'Bodoni Moda', serif;
-            font-size: 3rem;
-            font-weight: 600;
-            color: #D4AF37;
-            margin-bottom: 40px;
-            text-shadow: 
-                0 0 20px rgba(212, 175, 55, 0.6),
-                0 0 40px rgba(138, 43, 226, 0.3);
-            letter-spacing: 0.3rem;
         }
         
         .subtitle {
-            font-size: 1.4rem;
+            font-size: clamp(1rem, 2vw, 1.4rem);
             font-weight: 300;
             color: #C9B6DB;
             margin-bottom: 20px;
             letter-spacing: 0.4rem;
             text-transform: uppercase;
             opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.5s both;
         }
         
-        .epic-subtitle {
-            font-family: 'Bodoni Moda', serif;
-            font-size: 2rem;
-            color: #8A2BE2;
-            margin: 30px 0;
-            font-weight: 300;
-            letter-spacing: 0.2rem;
-            text-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 0.9;
+                transform: translateY(0);
+            }
         }
         
-        .text-content {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: #E6E6FA;
-            font-weight: 300;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        .highlight {
-            color: #D4AF37;
-            font-weight: 600;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-        }
-        
-        /* Logo integration */
-        .logo-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px;
-            height: 600px;
-            opacity: 0.15;
-            z-index: 1;
-            animation: pulse 4s ease-in-out infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.15; }
-            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.25; }
-        }
-        
-        /* Premium cards with mystical style */
+        /* Premium cards with liquid glass effect */
         .mystical-card {
             background: linear-gradient(135deg, 
-                rgba(75, 0, 130, 0.2) 0%, 
-                rgba(138, 43, 226, 0.1) 50%, 
-                rgba(212, 175, 55, 0.1) 100%);
-            backdrop-filter: blur(20px);
+                rgba(75, 0, 130, 0.15) 0%, 
+                rgba(138, 43, 226, 0.1) 25%,
+                rgba(212, 175, 55, 0.08) 50%,
+                rgba(138, 43, 226, 0.1) 75%,
+                rgba(75, 0, 130, 0.15) 100%);
+            backdrop-filter: blur(20px) saturate(150%);
+            -webkit-backdrop-filter: blur(20px) saturate(150%);
             border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 20px;
-            padding: 40px;
+            border-radius: 30px;
+            padding: 50px;
             margin: 20px 0;
             position: relative;
             overflow: hidden;
             box-shadow: 
                 0 10px 40px rgba(138, 43, 226, 0.3),
-                inset 0 0 60px rgba(212, 175, 55, 0.1);
-            transition: all 0.5s ease;
+                inset 0 0 60px rgba(212, 175, 55, 0.1),
+                0 1px 2px rgba(255, 255, 255, 0.1) inset;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .mystical-card::before {
@@ -271,146 +433,221 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
-            animation: rotate 30s linear infinite;
+            background: radial-gradient(circle at 30% 40%, 
+                rgba(212, 175, 55, 0.2) 0%, 
+                transparent 50%);
+            animation: liquidRotate 20s linear infinite;
+            pointer-events: none;
+        }
+        
+        .mystical-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.05) 50%,
+                transparent 70%
+            );
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+        
+        .mystical-card:hover::after {
+            transform: translateX(100%);
+        }
+        
+        @keyframes liquidRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
         
         .mystical-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px) scale(1.02);
             box-shadow: 
                 0 20px 60px rgba(138, 43, 226, 0.5),
-                inset 0 0 80px rgba(212, 175, 55, 0.2);
+                inset 0 0 80px rgba(212, 175, 55, 0.2),
+                0 1px 2px rgba(255, 255, 255, 0.2) inset;
             border-color: rgba(212, 175, 55, 0.6);
         }
         
-        .mystical-card h3 {
-            font-family: 'Cinzel Decorative', serif;
-            color: #D4AF37;
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            text-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
-            position: relative;
-            z-index: 2;
-        }
-        
-        .mystical-card p, .mystical-card li {
-            position: relative;
-            z-index: 2;
-        }
-        
-        /* Epic grid layouts */
-        .sacred-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
-            margin-top: 50px;
-        }
-        
-        /* Ceremony numbers with mystical style */
-        .ceremony-number {
-            font-family: 'Cinzel Decorative', serif;
-            font-size: 4rem;
-            color: #8A2BE2;
-            opacity: 0.3;
-            position: absolute;
-            top: -20px;
-            right: 20px;
-            text-shadow: 0 0 30px rgba(138, 43, 226, 0.8);
-        }
-        
-        /* Navigation with premium style */
+        /* Interactive navigation dots */
         .navigation {
             position: fixed;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 20px;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
             z-index: 100;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 15px 30px;
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(212, 175, 55, 0.3);
         }
         
         .nav-dot {
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background: rgba(138, 43, 226, 0.5);
+            background: transparent;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            margin: 20px 0;
             cursor: pointer;
-            transition: all 0.5s;
+            transition: all 0.3s ease;
             position: relative;
         }
         
-        .nav-dot::after {
+        .nav-dot::before {
             content: '';
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            width: 20px;
-            height: 20px;
+            transform: translate(-50%, -50%) scale(0);
+            width: 6px;
+            height: 6px;
+            background: #D4AF37;
             border-radius: 50%;
-            border: 1px solid rgba(212, 175, 55, 0);
-            transition: all 0.5s;
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-dot.active::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .nav-dot:hover {
+            border-color: #D4AF37;
+            transform: scale(1.2);
         }
         
         .nav-dot.active {
-            background: #D4AF37;
-            box-shadow: 0 0 20px #D4AF37;
+            border-color: #D4AF37;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
         }
         
-        .nav-dot.active::after {
-            border-color: rgba(212, 175, 55, 0.6);
+        /* Page indicator with Sanskrit-style numerals */
+        .page-indicator {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.2rem;
+            color: #8A2BE2;
+            opacity: 0.6;
+            z-index: 100;
+            letter-spacing: 0.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
         
-        /* CTA Button - Epic style */
+        .page-indicator:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        
+        .page-indicator span {
+            color: #D4AF37;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+        }
+        
+        /* Epic CTA button */
         .cta-epic {
             display: inline-block;
-            padding: 25px 60px;
+            padding: 30px 70px;
             background: linear-gradient(135deg, #D4AF37 0%, #B8860B 50%, #D4AF37 100%);
             color: #000;
             text-decoration: none;
             font-family: 'Cinzel Decorative', serif;
             font-weight: 700;
-            font-size: 1.3rem;
+            font-size: clamp(1rem, 2vw, 1.3rem);
             letter-spacing: 0.2rem;
-            border-radius: 50px;
+            border-radius: 60px;
             margin-top: 50px;
             position: relative;
             overflow: hidden;
-            transition: all 0.5s;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 
                 0 10px 40px rgba(212, 175, 55, 0.5),
-                inset 0 0 20px rgba(255, 255, 255, 0.3);
+                inset 0 0 20px rgba(255, 255, 255, 0.3),
+                0 2px 4px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
         }
         
         .cta-epic::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transform: rotate(45deg);
-            transition: all 0.5s;
-        }
-        
-        .cta-epic:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 
-                0 20px 60px rgba(212, 175, 55, 0.8),
-                inset 0 0 30px rgba(255, 255, 255, 0.5);
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.4), 
+                transparent
+            );
+            transition: left 0.5s;
         }
         
         .cta-epic:hover::before {
             left: 100%;
         }
         
-        /* Date location - epic style (удалено, так как больше не используется) */
+        .cta-epic:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 
+                0 20px 60px rgba(212, 175, 55, 0.8),
+                inset 0 0 30px rgba(255, 255, 255, 0.5),
+                0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Hover interactive elements */
+        [data-hover-glow] {
+            transition: all 0.3s ease;
+        }
+        
+        [data-hover-glow]:hover {
+            text-shadow: 0 0 30px currentColor;
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .navigation {
+                right: 20px;
+            }
+            
+            .nav-dot {
+                width: 10px;
+                height: 10px;
+                margin: 15px 0;
+            }
+            
+            .page-indicator {
+                top: 20px;
+                right: 20px;
+                font-size: 1rem;
+            }
+            
+            .slide-content {
+                padding: 40px 20px;
+            }
+            
+            .mystical-card {
+                padding: 30px 20px;
+            }
+            
+            .sound-toggle {
+                bottom: 20px;
+                left: 20px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+        
+        /* Sacred grid enhanced */
+        .sacred-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
         
         /* Lists with mystical bullets */
         .mystical-list {
@@ -420,10 +657,10 @@
         }
         
         .mystical-list li {
-            padding: 15px 0 15px 40px;
+            padding: 20px 0 20px 50px;
             position: relative;
             border-bottom: 1px solid rgba(212, 175, 55, 0.1);
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
         
         .mystical-list li::before {
@@ -433,159 +670,305 @@
             color: #D4AF37;
             font-size: 1.5rem;
             text-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+            animation: symbolPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes symbolPulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
         }
         
         .mystical-list li:hover {
-            padding-left: 50px;
+            padding-left: 60px;
             color: #D4AF37;
+            background: linear-gradient(to right, 
+                rgba(212, 175, 55, 0.05) 0%, 
+                transparent 100%);
         }
         
-        /* Special effects for slide 1 */
-        .slide-1 .logo-main {
+        /* Logo animation */
+        .logo-main {
             width: 400px;
             height: 400px;
             margin: 0 auto 40px;
             position: relative;
             filter: drop-shadow(0 0 50px rgba(212, 175, 55, 0.6));
-            animation: float-logo 6s ease-in-out infinite;
+            animation: floatLogo 6s ease-in-out infinite, rotateLogo 20s linear infinite;
         }
         
-        @keyframes float-logo {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+        @keyframes floatLogo {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
         }
         
-        .slide-1 .logo-main img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+        @keyframes rotateLogo {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
         
-        /* Mountain silhouette for Nepal slides */
-        .mountains {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 300px;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 300"><path d="M0,300 L0,150 C200,100 300,50 500,80 C700,110 800,40 1000,70 C1200,100 1400,20 1600,60 C1800,100 1920,120 1920,120 L1920,300 Z" fill="%23000033" opacity="0.6"/><path d="M0,300 L0,200 C150,150 250,100 450,130 C650,160 750,90 950,120 C1150,150 1350,70 1550,110 C1750,150 1920,170 1920,170 L1920,300 Z" fill="%23000044" opacity="0.8"/></svg>') no-repeat bottom;
-            background-size: cover;
-            z-index: 2;
-        }
-        
-        /* Mandala pattern background */
-        .mandala-bg {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 800px;
-            height: 800px;
-            opacity: 0.05;
-            z-index: 1;
-            animation: rotate 120s linear infinite;
-        }
-        
-        /* Premium content list for slide 2 */
-        .content-menu {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
+        /* Content menu enhanced */
         .content-menu-item {
             display: flex;
             align-items: center;
-            padding: 20px 0;
+            padding: 25px 0;
             border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .content-menu-item::before {
+            content: '';
+            position: absolute;
+            left: -100%;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(212, 175, 55, 0.1), 
+                transparent);
+            transition: left 0.5s;
+        }
+        
+        .content-menu-item:hover::before {
+            left: 100%;
         }
         
         .content-menu-item:hover {
-            padding-left: 20px;
+            padding-left: 30px;
             border-bottom-color: rgba(212, 175, 55, 0.6);
         }
         
         .content-menu-item .number {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: #8A2BE2;
             margin-right: 30px;
             text-shadow: 0 0 20px rgba(138, 43, 226, 0.6);
+            transition: all 0.3s ease;
         }
         
-        .content-menu-item .text {
-            font-size: 1.2rem;
-            color: #E6E6FA;
-            transition: all 0.3s;
-        }
-        
-        .content-menu-item:hover .text {
+        .content-menu-item:hover .number {
+            transform: scale(1.1) rotate(-5deg);
             color: #D4AF37;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+        }
+        
+        /* Ceremony numbers */
+        .ceremony-number {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 4rem;
+            color: #8A2BE2;
+            opacity: 0.3;
+            position: absolute;
+            top: -20px;
+            right: 20px;
+            text-shadow: 0 0 30px rgba(138, 43, 226, 0.8);
+            animation: numberFloat 4s ease-in-out infinite;
+        }
+        
+        @keyframes numberFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Mountains enhanced */
+        .mountains {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 400px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 400"><defs><linearGradient id="mount1" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:%23000033;stop-opacity:0.4" /><stop offset="100%" style="stop-color:%23000033;stop-opacity:0.8" /></linearGradient><linearGradient id="mount2" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:%23000044;stop-opacity:0.6" /><stop offset="100%" style="stop-color:%23000044;stop-opacity:0.9" /></linearGradient></defs><path d="M0,400 L0,150 C200,100 300,50 500,80 C700,110 800,40 1000,70 C1200,100 1400,20 1600,60 C1800,100 1920,120 1920,120 L1920,400 Z" fill="url(%23mount1)"/><path d="M0,400 L0,200 C150,150 250,100 450,130 C650,160 750,90 950,120 C1150,150 1350,70 1550,110 C1750,150 1920,170 1920,170 L1920,400 Z" fill="url(%23mount2)"/></svg>') no-repeat bottom;
+            background-size: cover;
+            z-index: 2;
+            opacity: 0.8;
+        }
+        
+        /* Highlight enhanced */
+        .highlight {
+            color: #D4AF37;
+            font-weight: 600;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, #D4AF37, #FFD700);
+            transition: width 0.3s ease;
+        }
+        
+        .highlight:hover::after {
+            width: 100%;
+        }
+        
+        /* Epic subtitle enhanced */
+        .epic-subtitle {
+            font-family: 'Bodoni Moda', serif;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            color: #8A2BE2;
+            margin: 30px 0;
+            font-weight: 300;
+            letter-spacing: 0.2rem;
+            text-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .epic-subtitle::before,
+        .epic-subtitle::after {
+            content: '◈';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #D4AF37;
+            font-size: 1.5rem;
+            animation: symbolFloat 3s ease-in-out infinite;
+        }
+        
+        .epic-subtitle::before {
+            left: -40px;
+        }
+        
+        .epic-subtitle::after {
+            right: -40px;
+            animation-delay: 1.5s;
+        }
+        
+        @keyframes symbolFloat {
+            0%, 100% { transform: translateY(-50%) scale(1); opacity: 0.5; }
+            50% { transform: translateY(-50%) scale(1.2); opacity: 1; }
         }
     </style>
 </head>
 <body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="mandala-loader">
+            <svg viewBox="0 0 200 200">
+                <defs>
+                    <linearGradient id="loaderGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#8A2BE2;stop-opacity:1" />
+                        <stop offset="50%" style="stop-color:#D4AF37;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#8A2BE2;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <circle cx="100" cy="100" r="90" fill="none" stroke="url(#loaderGradient)" stroke-width="2" opacity="0.3"/>
+                <circle cx="100" cy="100" r="70" fill="none" stroke="url(#loaderGradient)" stroke-width="1.5" opacity="0.5"/>
+                <circle cx="100" cy="100" r="50" fill="none" stroke="url(#loaderGradient)" stroke-width="1" opacity="0.7"/>
+                <rect x="50" y="50" width="100" height="100" fill="none" stroke="url(#loaderGradient)" stroke-width="1" transform="rotate(45 100 100)" opacity="0.5"/>
+            </svg>
+        </div>
+    </div>
+    
+    <!-- Custom cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    
+    <!-- Sound toggle -->
+    <div class="sound-toggle muted" id="soundToggle"></div>
+    
     <div class="presentation-container">
-        <!-- Floating particles -->
-        <div class="particles"></div>
+        <!-- Sacred geometry background -->
+        <div class="sacred-geometry">
+            <svg viewBox="0 0 1000 1000">
+                <defs>
+                    <linearGradient id="sacredGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#8A2BE2;stop-opacity:0.5" />
+                        <stop offset="100%" style="stop-color:#D4AF37;stop-opacity:0.5" />
+                    </linearGradient>
+                </defs>
+                <g transform="translate(500,500)">
+                    <!-- Flower of Life pattern -->
+                    <circle r="100" fill="none" stroke="url(#sacredGrad)" stroke-width="0.5"/>
+                    <circle r="100" fill="none" stroke="url(#sacredGrad)" stroke-width="0.5" transform="translate(100,0)"/>
+                    <circle r="100" fill="none" stroke="url(#sacredGrad)" stroke-width="0.5" transform="translate(50,86.6)"/>
+                    <circle r="100" fill="none" stroke="url(#sacredGrad)" stroke-width="0.5" transform="translate(-50,86.6)"/>
+                    <circle r="100" fill="none" stroke="url(#sacredGrad)" stroke-width="0.5" transform="translate(-100,0)"/>
+                    <circle r="100" fill="none" stroke="url(#sacredGrad)" stroke-width="0.5" transform="translate(-50,-86.6)"/>
+                    <circle r="100" fill="none" stroke="url(#sacredGrad)" stroke-width="0.5" transform="translate(50,-86.6)"/>
+                    <!-- Metatron's Cube -->
+                    <circle r="300" fill="none" stroke="url(#sacredGrad)" stroke-width="0.3"/>
+                    <polygon points="0,-300 260,-150 260,150 0,300 -260,150 -260,-150" fill="none" stroke="url(#sacredGrad)" stroke-width="0.3"/>
+                </g>
+            </svg>
+        </div>
+        
+        <!-- Energy field -->
+        <div class="energy-field"></div>
+        
+        <!-- Mystical fog -->
+        <div class="fog"></div>
+        
+        <!-- Enhanced particles -->
+        <div class="particles-container" id="particlesContainer"></div>
+        
+        <!-- Page indicator -->
+        <div class="page-indicator">
+            <span id="currentPage">I</span> / <span id="totalPages">XV</span>
+        </div>
         
         <!-- Slide 1: Epic Title -->
-        <div class="slide slide-1 active">
-            <div class="logo-container">
-                <svg viewBox="0 0 500 500" style="width: 100%; height: 100%;">
-                    <defs>
-                        <radialGradient id="goldGradient">
-                            <stop offset="0%" style="stop-color:#F4E4C1;stop-opacity:1" />
-                            <stop offset="50%" style="stop-color:#D4AF37;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#B8860B;stop-opacity:1" />
-                        </radialGradient>
-                    </defs>
-                    <g transform="translate(250,250)">
-                        <circle r="240" fill="none" stroke="url(#goldGradient)" stroke-width="2" opacity="0.3"/>
-                        <circle r="200" fill="none" stroke="url(#goldGradient)" stroke-width="1" opacity="0.3"/>
-                        <circle r="160" fill="none" stroke="url(#goldGradient)" stroke-width="1" opacity="0.3"/>
-                        <path d="M-100,-100 L100,-100 L100,100 L-100,100 Z" fill="none" stroke="url(#goldGradient)" stroke-width="2" opacity="0.3" transform="rotate(45)"/>
-                    </g>
-                </svg>
-            </div>
+        <div class="slide active">
             <div class="slide-content" style="display: flex; flex-direction: column; justify-content: space-between; height: 100vh; padding: 80px 60px;">
                 <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+                    <div class="logo-main">
+                        <svg viewBox="0 0 500 500" style="width: 100%; height: 100%;">
+                            <defs>
+                                <radialGradient id="goldGradient">
+                                    <stop offset="0%" style="stop-color:#F4E4C1;stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:#D4AF37;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#B8860B;stop-opacity:1" />
+                                </radialGradient>
+                                <filter id="glow">
+                                    <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                                    <feMerge>
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <g transform="translate(250,250)">
+                                <circle r="240" fill="none" stroke="url(#goldGradient)" stroke-width="2" opacity="0.3" filter="url(#glow)"/>
+                                <circle r="200" fill="none" stroke="url(#goldGradient)" stroke-width="1" opacity="0.4" filter="url(#glow)"/>
+                                <circle r="160" fill="none" stroke="url(#goldGradient)" stroke-width="1" opacity="0.5" filter="url(#glow)"/>
+                                <path d="M-100,-100 L100,-100 L100,100 L-100,100 Z" fill="none" stroke="url(#goldGradient)" stroke-width="2" opacity="0.4" transform="rotate(45)" filter="url(#glow)"/>
+                                <!-- Sri Yantra elements -->
+                                <path d="M0,-150 L130,75 L-130,75 Z" fill="none" stroke="url(#goldGradient)" stroke-width="1" opacity="0.6"/>
+                                <path d="M0,150 L-130,-75 L130,-75 Z" fill="none" stroke="url(#goldGradient)" stroke-width="1" opacity="0.6"/>
+                            </g>
+                        </svg>
+                    </div>
                     <div class="subtitle">ТЕХНОЛОГИЯ, КОТОРАЯ ИЗМЕНИТ ТРАЕКТОРИЮ ВАШЕЙ СУДЬБЫ</div>
-                    <h1 class="title-main" style="margin: 30px 0;">ХРАМ<br>ВОЗНЕСЕНИЯ</h1>
-                    <div class="epic-subtitle" style="margin-bottom: 30px;">УПРАВЛЯЕМАЯ РЕИНКАРНАЦИЯ ПРИ ЖИЗНИ</div>
+                    <h1 class="title-main">ХРАМ<br>ВОЗНЕСЕНИЯ</h1>
+                    <div class="epic-subtitle">УПРАВЛЯЕМАЯ РЕИНКАРНАЦИЯ ПРИ ЖИЗНИ</div>
                     <div class="subtitle">МЫ ВОССТАНОВИЛИ УТРАЧЕННЫЙ ПРОТОКОЛ</div>
                 </div>
                 <div style="text-align: center; padding-bottom: 40px;">
-                    <div style="font-size: 1.4rem; letter-spacing: 0.5rem; color: #D4AF37; text-shadow: 0 0 20px rgba(212, 175, 55, 0.6); font-family: 'Bodoni Moda', serif;">
+                    <div style="font-size: 1.4rem; letter-spacing: 0.5rem; color: #D4AF37; text-shadow: 0 0 20px rgba(212, 175, 55, 0.6); font-family: 'Bodoni Moda', serif;" data-hover-glow>
                         НЕПАЛ ◈ СЕНТЯБРЬ 2025
                     </div>
-                    <div style="font-size: 1.6rem; letter-spacing: 0.4rem; color: #8A2BE2; margin-top: 15px; text-shadow: 0 0 25px rgba(138, 43, 226, 0.8); font-family: 'Cinzel Decorative', serif; font-weight: 600;">
+                    <div style="font-size: 1.6rem; letter-spacing: 0.4rem; color: #8A2BE2; margin-top: 15px; text-shadow: 0 0 25px rgba(138, 43, 226, 0.8); font-family: 'Cinzel Decorative', serif; font-weight: 600;" data-hover-glow>
                         6-10 ДНЕЙ
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- Slide 2: Contents with premium style -->
+        <!-- All other slides remain structurally the same but inherit the new enhanced styles -->
+        <!-- Slide 2: Contents -->
         <div class="slide">
-            <div class="mandala-bg">
-                <svg viewBox="0 0 800 800" style="width: 100%; height: 100%; opacity: 0.5;">
-                    <defs>
-                        <pattern id="mandalaPattern" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
-                            <circle cx="100" cy="100" r="80" fill="none" stroke="#8A2BE2" stroke-width="0.5"/>
-                            <circle cx="100" cy="100" r="60" fill="none" stroke="#8A2BE2" stroke-width="0.5"/>
-                            <circle cx="100" cy="100" r="40" fill="none" stroke="#8A2BE2" stroke-width="0.5"/>
-                            <rect x="60" y="60" width="80" height="80" fill="none" stroke="#8A2BE2" stroke-width="0.5" transform="rotate(45 100 100)"/>
-                        </pattern>
-                    </defs>
-                    <rect width="800" height="800" fill="url(#mandalaPattern)"/>
-                </svg>
-            </div>
             <div class="slide-content">
                 <h2 class="title-secondary">ПУТЬ ИНИЦИАЦИИ</h2>
-                <div class="content-menu">
+                <div class="content-menu" style="max-width: 800px; margin: 0 auto;">
                     <div class="content-menu-item">
                         <span class="number">01</span>
                         <span class="text">Что такое Храм Вознесения</span>
@@ -642,7 +1025,7 @@
             </div>
         </div>
         
-        <!-- Slide 3: About with mystical design -->
+        <!-- Slide 3: About -->
         <div class="slide">
             <div class="slide-content">
                 <h2 class="title-secondary">ХРАМ ВОЗНЕСЕНИЯ</h2>
@@ -683,7 +1066,7 @@
                 <div class="epic-subtitle">Портал трансформации</div>
                 
                 <div class="mystical-card" style="margin: 40px auto; max-width: 800px;">
-                    <h3 style="text-align: center; margin-bottom: 30px;">Секретное место в долине Катманду</h3>
+                    <h3 style="text-align: center; margin-bottom: 30px; color: #D4AF37; font-size: 1.8rem;">Секретное место в долине Катманду</h3>
                     <p style="text-align: center; font-size: 1.2rem; color: #C9B6DB;">
                         Уединенное пространство силы, где веками проводились инициации высшего порядка
                     </p>
@@ -692,56 +1075,56 @@
                 <div class="sacred-grid" style="max-width: 1000px; margin: 0 auto;">
                     <div class="mystical-card">
                         <div class="ceremony-number">I</div>
-                        <h3>Средоточие духовных учений</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">Средоточие духовных учений</h3>
                         <p>Место встречи всех мистических традиций планеты, где хранятся коды трансформации человеческого сознания</p>
                     </div>
                     <div class="mystical-card">
                         <div class="ceremony-number">II</div>
-                        <h3>Энергетический центр планеты</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">Энергетический центр планеты</h3>
                         <p>Точка схождения измерений, где границы между мирами становятся проницаемыми для подготовленного сознания</p>
                     </div>
                     <div class="mystical-card">
                         <div class="ceremony-number">III</div>
-                        <h3>Хранилище древних протоколов</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">Хранилище древних протоколов</h3>
                         <p>Священные тексты и живые линии передачи технологий управляемой смерти и перерождения</p>
                     </div>
                     <div class="mystical-card">
                         <div class="ceremony-number">IV</div>
-                        <h3>Портал к высшим измерениям</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">Портал к высшим измерениям</h3>
                         <p>Каждый храм — технология, каждая гора — антенна к космическому сознанию</p>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- Slide 5: Masters with epic bio cards -->
+        <!-- Slide 5: Masters -->
         <div class="slide">
             <div class="slide-content">
                 <h2 class="title-secondary">ХРАНИТЕЛИ ПРОТОКОЛА ВОЗНЕСЕНИЯ</h2>
                 
                 <div class="sacred-grid" style="margin-top: 50px;">
                     <div class="mystical-card">
-                        <h3>OLENA RUTA</h3>
+                        <h3 style="color: #D4AF37; font-size: 1.8rem; margin-bottom: 10px;">OLENA RUTA</h3>
                         <div class="subtitle" style="color: #8A2BE2; margin-bottom: 20px;">Целитель</div>
                         <p>Восстановившая древние коды инициации. Прошла обучение у носителей традиций Амазонии и Тибета. 
                         Специализация: трансформация родовых матриц и перепрограммирование личностных алгоритмов на уровне квантового поля.</p>
                     </div>
                     
                     <div class="mystical-card">
-                        <h3>ЦЕЛИТЕЛЬ СЕРГИЙ</h3>
+                        <h3 style="color: #D4AF37; font-size: 1.8rem; margin-bottom: 10px;">ЦЕЛИТЕЛЬ СЕРГИЙ</h3>
                         <div class="subtitle" style="color: #8A2BE2; margin-bottom: 20px;">Проводник между мирами</div>
                         <p>Посвященный шаман амазонской традиции, мастер работы с тонкими телами. Провел более 1000 церемоний изгнания сущностей. 
                         Обучался у старейшин племен Кечуа. Практик ведических знаний и ритуалов.</p>
                     </div>
                     
                     <div class="mystical-card">
-                        <h3>ПРИГЛАШЕННЫЕ ШАМАНЫ АМАЗОНИИ</h3>
+                        <h3 style="color: #D4AF37; font-size: 1.8rem; margin-bottom: 20px;">ПРИГЛАШЕННЫЕ ШАМАНЫ АМАЗОНИИ</h3>
                         <p>Носители живой традиции племен Кечуа, специально приглашенные для проведения церемоний. Владеющие песнями власти, открывающими порталы между измерениями 
                         и изгоняющими паразитические программы из энергетического поля человека.</p>
                     </div>
                     
                     <div class="mystical-card">
-                        <h3>ПОСВЯЩЕННЫЕ ШАМАНЫ ТИБЕТА</h3>
+                        <h3 style="color: #D4AF37; font-size: 1.8rem; margin-bottom: 20px;">ПОСВЯЩЕННЫЕ ШАМАНЫ ТИБЕТА</h3>
                         <p>Хранители тайных практик Бардо и протоколов сознательного умирания. 
                         Мастера тантрических ритуалов освобождения, передающие знание через прямую передачу за пределами слов.</p>
                     </div>
@@ -749,7 +1132,7 @@
             </div>
         </div>
         
-        <!-- Slide 6: Technology of Death -->
+        <!-- Slide 6: Technology -->
         <div class="slide">
             <div class="slide-content">
                 <h2 class="title-secondary">УПРАВЛЯЕМАЯ РЕИНКАРНАЦИЯ</h2>
@@ -770,30 +1153,25 @@
                 <div class="sacred-grid">
                     <div class="mystical-card">
                         <div class="ceremony-number">1</div>
-                        <h3>Освобождение физического уровня</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">Освобождение физического уровня</h3>
                         <p>Трансформация отождествления с телом. Выход за пределы материальной иллюзии.</p>
                     </div>
                     <div class="mystical-card">
                         <div class="ceremony-number">2</div>
-                        <h3>Очищение эмоционального тела</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">Очищение эмоционального тела</h3>
                         <p>Изгнание сущностей, питающихся драмой. Освобождение от чужеродных программ.</p>
                     </div>
                     <div class="mystical-card">
                         <div class="ceremony-number">3</div>
-                        <h3>Кармическое очищение</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">Кармическое очищение</h3>
                         <p>Трансформация родовых программ и освобождение от кармических контрактов всех воплощений.</p>
                     </div>
                     <div class="mystical-card">
                         <div class="ceremony-number">4</div>
-                        <h3>Реинкарнация при жизни</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">Реинкарнация при жизни</h3>
                         <p>Растворение старой личности и рождение аватара — проводника божественной воли.</p>
                     </div>
                 </div>
-                
-                <p style="text-align: center; margin-top: 40px; font-size: 1.2rem; color: #C9B6DB;">
-                    Каждая церемония проводится по протоколу Бардо Тхёдол<br>
-                    с применением священных растений силы и звуковых технологий экзорцизма.
-                </p>
             </div>
         </div>
         
@@ -804,7 +1182,7 @@
                 
                 <div class="sacred-grid" style="margin-top: 50px;">
                     <div class="mystical-card">
-                        <h3>МАСТЕРА И ПРОВОДНИКИ</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">МАСТЕРА И ПРОВОДНИКИ</h3>
                         <ul class="mystical-list">
                             <li>Шаманы линии передачи Кечуа и тибетских тантр</li>
                             <li>Учителя кундалини-йоги и пранаямы</li>
@@ -814,7 +1192,7 @@
                     </div>
                     
                     <div class="mystical-card">
-                        <h3>ЕЖЕДНЕВНЫЕ ПРАКТИКИ</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">ЕЖЕДНЕВНЫЕ ПРАКТИКИ</h3>
                         <ul class="mystical-list">
                             <li>Утренние активации через древние тибетские практики</li>
                             <li>Дыхание огня для глубинной трансформации</li>
@@ -825,7 +1203,7 @@
                 </div>
                 
                 <div class="mystical-card" style="margin-top: 40px;">
-                    <h3 style="text-align: center;">САКРАЛЬНЫЕ ПОСЕЩЕНИЯ</h3>
+                    <h3 style="text-align: center; color: #D4AF37; margin-bottom: 30px;">САКРАЛЬНЫЕ ПОСЕЩЕНИЯ</h3>
                     <div style="display: flex; justify-content: space-around; margin-top: 30px;">
                         <div style="text-align: center;">
                             <div style="font-size: 3rem; color: #8A2BE2;">◈</div>
@@ -851,7 +1229,7 @@
                 
                 <div class="sacred-grid">
                     <div class="mystical-card">
-                        <h3>НЕМЕДЛЕННЫЕ ИЗМЕНЕНИЯ</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">НЕМЕДЛЕННЫЕ ИЗМЕНЕНИЯ</h3>
                         <ul class="mystical-list">
                             <li>Изгнание энергетических паразитов</li>
                             <li>Освобождение от родовых программ</li>
@@ -861,7 +1239,7 @@
                     </div>
                     
                     <div class="mystical-card">
-                        <h3>БИЗНЕС-РЕЗУЛЬТАТЫ</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">БИЗНЕС-РЕЗУЛЬТАТЫ</h3>
                         <ul class="mystical-list">
                             <li>Квантовый скачок в принятии стратегических решений</li>
                             <li>Доступ к инновационным решениям через расширенное восприятие</li>
@@ -872,7 +1250,7 @@
                     </div>
                     
                     <div class="mystical-card">
-                        <h3>ДОЛГОСРОЧНАЯ ПЕРЕЗАГРУЗКА</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">ДОЛГОСРОЧНАЯ ПЕРЕЗАГРУЗКА</h3>
                         <ul class="mystical-list">
                             <li>Иммунитет к манипуляциям реальности</li>
                             <li>Способность создавать, а не следовать</li>
@@ -882,7 +1260,7 @@
                     </div>
                     
                     <div class="mystical-card">
-                        <h3>ROI ТРАНСФОРМАЦИИ</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">ROI ТРАНСФОРМАЦИИ</h3>
                         <ul class="mystical-list">
                             <li>Окупаемость через одно прорывное решение</li>
                             <li>Новый уровень влияния = новый уровень ресурсов</li>
@@ -908,7 +1286,7 @@
                 <h2 class="title-secondary">СВЯЩЕННАЯ АЛХИМИЯ ТРАНСФОРМАЦИИ</h2>
                 
                 <div class="mystical-card" style="margin: 40px auto;">
-                    <h3 style="text-align: center;">МУЗЫКА ПЕРЕХОДА</h3>
+                    <h3 style="text-align: center; color: #D4AF37; margin-bottom: 20px;">МУЗЫКА ПЕРЕХОДА</h3>
                     <p style="text-align: center; font-size: 1.2rem; margin-top: 20px;">
                         Священные песни шаманов сплетаются с тибетскими мантрами,<br>
                         создавая звуковой портал для навигации в пространстве Бардо.
@@ -917,7 +1295,7 @@
                 
                 <div class="sacred-grid">
                     <div class="mystical-card">
-                        <h3>ЦЕРЕМОНИАЛЬНАЯ КУХНЯ</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">ЦЕРЕМОНИАЛЬНАЯ КУХНЯ</h3>
                         <p>Специальное питание по протоколам очищения:</p>
                         <ul class="mystical-list" style="margin-top: 20px;">
                             <li>Диета для подготовки к Священным церемониям</li>
@@ -927,7 +1305,7 @@
                     </div>
                     
                     <div class="mystical-card">
-                        <h3>КРУГ СИЛЫ</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">КРУГ СИЛЫ</h3>
                         <p>Группа ограничена. Только те, кто готов к реинкарнации при жизни.</p>
                         <p style="margin-top: 20px; color: #D4AF37;">Каждый участник усиливает поле трансформации для всех.</p>
                     </div>
@@ -961,7 +1339,7 @@
                     <ul class="mystical-list" style="font-size: 1.2rem;">
                         <li>Обнуляет кармические долги всех воплощений</li>
                         <li>Разрывает контракты с паразитами сознания</li>
-                                                    <li>Открывает прямой канал к Высшим божественным созданиям</li>
+                        <li>Открывает прямой канал к Высшим божественным созданиям</li>
                         <li>Дает права на создание новых миров</li>
                     </ul>
                 </div>
@@ -987,7 +1365,7 @@
                 <div class="sacred-grid">
                     <div class="mystical-card">
                         <div class="ceremony-number">I</div>
-                        <h3>ДЕНЬ 1: ПОДГОТОВКА</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">ДЕНЬ 1: ПОДГОТОВКА</h3>
                         <ul class="mystical-list">
                             <li>Очищение и настройка</li>
                             <li>Обучение навигации в Бардо</li>
@@ -997,7 +1375,7 @@
                     
                     <div class="mystical-card">
                         <div class="ceremony-number">II-V</div>
-                        <h3>ДЕНЬ 2-5: СВЯЩЕННЫЕ ЦЕРЕМОНИИ</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">ДЕНЬ 2-5: СВЯЩЕННЫЕ ЦЕРЕМОНИИ</h3>
                         <ul class="mystical-list">
                             <li>Проживание цикла реинкарнации</li>
                             <li>Трансформация на всех уровнях бытия</li>
@@ -1007,7 +1385,7 @@
                     
                     <div class="mystical-card">
                         <div class="ceremony-number">VI-VII</div>
-                        <h3>ДЕНЬ 6-7: КАРМИЧЕСКОЕ ОЧИЩЕНИЕ</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">ДЕНЬ 6-7: КАРМИЧЕСКОЕ ОЧИЩЕНИЕ</h3>
                         <ul class="mystical-list">
                             <li>Церемонии кармического очищения</li>
                             <li>Рождение аватара</li>
@@ -1017,7 +1395,7 @@
                     
                     <div class="mystical-card">
                         <div class="ceremony-number">VIII-X</div>
-                        <h3>ДЕНЬ 8-10: ИНТЕГРАЦИЯ</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">ДЕНЬ 8-10: ИНТЕГРАЦИЯ</h3>
                         <ul class="mystical-list">
                             <li>Обучение жизни в новом состоянии</li>
                             <li>Посещение сакральных мест</li>
@@ -1035,7 +1413,7 @@
                 
                 <div class="sacred-grid">
                     <div class="mystical-card">
-                        <h3>ПОЛНАЯ КОНФИДЕНЦИАЛЬНОСТЬ</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">ПОЛНАЯ КОНФИДЕНЦИАЛЬНОСТЬ</h3>
                         <ul class="mystical-list">
                             <li>NDA для всего персонала</li>
                             <li>Закрытая территория без посторонних</li>
@@ -1045,7 +1423,7 @@
                     </div>
                     
                     <div class="mystical-card">
-                        <h3>ПРЕМИУМ-СЕРВИС</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">ПРЕМИУМ-СЕРВИС</h3>
                         <ul class="mystical-list">
                             <li>Персональный ассистент 24/7</li>
                             <li>Приватный трансфер и VIP-логистика</li>
@@ -1056,7 +1434,7 @@
                     </div>
                     
                     <div class="mystical-card">
-                        <h3>ТЕХНОЛОГИИ ТРАНСФОРМАЦИИ</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">ТЕХНОЛОГИИ ТРАНСФОРМАЦИИ</h3>
                         <ul class="mystical-list">
                             <li>Апгрейд операционной системы сознания</li>
                             <li>Биохакинг на квантовом уровне</li>
@@ -1066,7 +1444,7 @@
                     </div>
                     
                     <div class="mystical-card">
-                        <h3>БЕЗУПРЕЧНОСТЬ ИСПОЛНЕНИЯ</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">БЕЗУПРЕЧНОСТЬ ИСПОЛНЕНИЯ</h3>
                         <ul class="mystical-list">
                             <li>Медицинская команда на месте</li>
                             <li>Психологическая поддержка 24/7</li>
@@ -1097,7 +1475,7 @@
                 </div>
                 
                 <div class="mystical-card" style="max-width: 900px; margin: 40px auto;">
-                    <h3 style="text-align: center;">ЗАКРЫТОЕ СООБЩЕСТВО ВЫПУСКНИКОВ</h3>
+                    <h3 style="text-align: center; color: #D4AF37; margin-bottom: 30px;">ЗАКРЫТОЕ СООБЩЕСТВО ВЫПУСКНИКОВ</h3>
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-top: 30px;">
                         <div style="text-align: center;">
                             <div style="font-size: 3rem; color: #D4AF37;">◈</div>
@@ -1130,7 +1508,7 @@
                 
                 <div class="sacred-grid">
                     <div class="mystical-card">
-                        <h3>3 МЕСЯЦА ПЕРСОНАЛЬНОГО СОПРОВОЖДЕНИЯ</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">3 МЕСЯЦА ПЕРСОНАЛЬНОГО СОПРОВОЖДЕНИЯ</h3>
                         <ul class="mystical-list">
                             <li>Еженедельные сессии с Olena Ruta</li>
                             <li>Экстренная поддержка 24/7</li>
@@ -1140,7 +1518,7 @@
                     </div>
                     
                     <div class="mystical-card">
-                        <h3>ЗАКРЫТЫЙ КЛУБ TEMPLE</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">ЗАКРЫТЫЙ КЛУБ TEMPLE</h3>
                         <ul class="mystical-list">
                             <li>Ежемесячные встречи в разных странах</li>
                             <li>Обмен опытом и ресурсами</li>
@@ -1150,7 +1528,7 @@
                     </div>
                     
                     <div class="mystical-card">
-                        <h3>ЭКСКЛЮЗИВНЫЕ ПРАКТИКИ</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">ЭКСКЛЮЗИВНЫЕ ПРАКТИКИ</h3>
                         <ul class="mystical-list">
                             <li>Доступ к продвинутым протоколам</li>
                             <li>Обновления технологий сознания</li>
@@ -1160,7 +1538,7 @@
                     </div>
                     
                     <div class="mystical-card">
-                        <h3>БИЗНЕС-СИНЕРГИЯ</h3>
+                        <h3 style="color: #D4AF37; margin-bottom: 20px;">БИЗНЕС-СИНЕРГИЯ</h3>
                         <ul class="mystical-list">
                             <li>Инвестиционные возможности внутри сообщества</li>
                             <li>Партнерства на новом уровне доверия</li>
@@ -1172,24 +1550,8 @@
             </div>
         </div>
         
-        <!-- Slide 15: Epic CTA -->
+        <!-- Slide 15: CTA -->
         <div class="slide">
-            <div class="logo-container">
-                <svg viewBox="0 0 500 500" style="width: 100%; height: 100%;">
-                    <defs>
-                        <radialGradient id="goldGradient2">
-                            <stop offset="0%" style="stop-color:#F4E4C1;stop-opacity:0.5" />
-                            <stop offset="50%" style="stop-color:#D4AF37;stop-opacity:0.5" />
-                            <stop offset="100%" style="stop-color:#B8860B;stop-opacity:0.5" />
-                        </radialGradient>
-                    </defs>
-                    <g transform="translate(250,250)">
-                        <circle r="240" fill="none" stroke="url(#goldGradient2)" stroke-width="2"/>
-                        <circle r="200" fill="none" stroke="url(#goldGradient2)" stroke-width="1"/>
-                        <circle r="160" fill="none" stroke="url(#goldGradient2)" stroke-width="1"/>
-                    </g>
-                </svg>
-            </div>
             <div class="slide-content">
                 <h2 class="title-secondary">ГОТОВЫ ЛИ ВЫ К КВАНТОВОМУ СКАЧКУ ВАШЕЙ РЕАЛЬНОСТИ?</h2>
                 
@@ -1257,21 +1619,78 @@
     </div>
     
     <script>
-        // Create floating particles
-        const particlesContainer = document.querySelector('.particles');
-        for (let i = 0; i < 50; i++) {
+        // Roman numerals
+        const romanNumerals = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV'];
+        
+        // Preloader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('hidden');
+            }, 2000);
+        });
+        
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        const follower = document.querySelector('.cursor-follower');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            setTimeout(() => {
+                follower.style.left = e.clientX + 'px';
+                follower.style.top = e.clientY + 'px';
+            }, 100);
+        });
+        
+        // Hover effects for cursor
+        document.querySelectorAll('a, button, .nav-dot, .content-menu-item, .sound-toggle').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+        
+        // Enhanced particles system
+        const particlesContainer = document.getElementById('particlesContainer');
+        
+        function createParticle() {
             const particle = document.createElement('div');
             particle.className = 'particle';
+            
+            const types = ['gold', 'purple', 'star'];
+            const type = types[Math.floor(Math.random() * types.length)];
+            particle.classList.add(type);
+            
             particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 20 + 's';
-            particle.style.animationDuration = (20 + Math.random() * 20) + 's';
+            
+            if (type === 'star') {
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                particle.style.top = Math.random() * 100 + '%';
+            } else {
+                particle.style.animationDelay = Math.random() * 30 + 's';
+                particle.style.animationDuration = (25 + Math.random() * 20) + 's';
+            }
+            
             particlesContainer.appendChild(particle);
+            
+            // Remove particle after animation
+            setTimeout(() => {
+                particle.remove();
+            }, 30000);
         }
+        
+        // Create initial particles
+        for (let i = 0; i < 80; i++) {
+            setTimeout(createParticle, i * 100);
+        }
+        
+        // Continuously create particles
+        setInterval(createParticle, 500);
         
         // Slide navigation
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
         const dots = document.querySelectorAll('.nav-dot');
+        const currentPageEl = document.getElementById('currentPage');
         
         function showSlide(index) {
             slides.forEach(slide => slide.classList.remove('active'));
@@ -1280,6 +1699,14 @@
             slides[index].classList.add('active');
             dots[index].classList.add('active');
             currentSlide = index;
+            
+            // Update page indicator
+            currentPageEl.textContent = romanNumerals[index];
+            
+            // Sound effect on slide change
+            if (!document.getElementById('soundToggle').classList.contains('muted')) {
+                playTransitionSound();
+            }
         }
         
         // Click navigation
@@ -1296,7 +1723,7 @@
             }
         });
         
-        // Swipe navigation for mobile
+        // Swipe navigation
         let touchStartX = 0;
         let touchEndX = 0;
         
@@ -1317,6 +1744,57 @@
                 showSlide(currentSlide - 1);
             }
         }
+        
+        // Mouse wheel navigation
+        let isScrolling = false;
+        document.addEventListener('wheel', (e) => {
+            if (!isScrolling) {
+                isScrolling = true;
+                
+                if (e.deltaY > 0 && currentSlide < slides.length - 1) {
+                    showSlide(currentSlide + 1);
+                } else if (e.deltaY < 0 && currentSlide > 0) {
+                    showSlide(currentSlide - 1);
+                }
+                
+                setTimeout(() => {
+                    isScrolling = false;
+                }, 800);
+            }
+        });
+        
+        // Sound system (mock implementation)
+        const soundToggle = document.getElementById('soundToggle');
+        soundToggle.addEventListener('click', () => {
+            soundToggle.classList.toggle('muted');
+        });
+        
+        function playTransitionSound() {
+            // Mock sound effect
+            console.log('Playing transition sound');
+        }
+        
+        // Content menu interaction
+        document.querySelectorAll('.content-menu-item').forEach((item, index) => {
+            item.addEventListener('click', () => {
+                // Navigate to corresponding slide (index + 2 because first 2 slides are intro)
+                if (index + 2 < slides.length) {
+                    showSlide(index + 2);
+                }
+            });
+        });
+        
+        // Parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            
+            document.querySelector('.sacred-geometry').style.transform = 
+                `translate(-50%, -50%) translate(${x}px, ${y}px)`;
+            
+            document.querySelector('.energy-field').style.transform = 
+                `translate(-50%, -50%) scale(1.2) translate(${-x}px, ${-y}px)`;
+        });
     </script>
 </body>
 </html>
